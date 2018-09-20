@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.domain" >
+	<class name="LinkMan" table="cst_linkman" >
+		<id name="lkm_id"  column="LKM_ID">
+			<generator class="native"></generator>
+		</id>
+		<property name="lkm_name" column="LKM_NAME" ></property>
+		<property name="lkm_gender" column="LKM_GENDER"></property>
+		<property name="lkm_phone" column="LKM_PHONE"></property>
+		<property name="lkm_mobile" column="LKM_MOBILE"></property>
+		<property name="lkm_email" column="LKM_EMAIL"></property>
+		<property name="lkm_qq" column="LKM_QQ"></property>
+		<property name="lkm_position" column="LKM_POSITION"></property>
+		<property name="lkm_memo" column="LKM_MEMO"></property>
+		<many-to-one name="customer" column="LKM_CUST_ID"  class="com.domain.Customer"></many-to-one>
+	</class>
+</hibernate-mapping>

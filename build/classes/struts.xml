@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.il8n.encoding" value="UTF-8" />
+	<constant name="struts.devMode" value="true" />
+	<!-- Add packages here -->
+	<package name="crm" namespace="/" extends="struts-default" >
+<interceptors>
+		<!-- 注册拦截器 -->
+				<interceptor name="privilegeInterceptor" class="com.web.interceptor.PrivilegeInterceptor"></interceptor>
+				
+		<!-- 配置拦截器栈 -->
+				<interceptor-stack name="myStack">
+					<interceptor-ref name="privilegeInterceptor">
+					<!-- 去掉不需要过滤器的 -->
+						<param name="excludeMethods">login</param>
+					</interceptor-ref>
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</interceptor-stack>
+			</interceptors>
+		<!-- 指定默认拦截器栈 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		
+		<!-- 全局结果集配置 -->
+		<global-results>
+			<result name="toLogin" type="redirect" >/login.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+		</global-exception-mappings>
+		<action name="strutsDemo1" class="lin.struts2.struts01.StrutsDemo1">
+			<!-- 配置结果页面的跳转 -->
+			<result name="success">/struts2/testStruts.jsp</result>
+		</action>
+		<!-- 多个请求对应一个action的方式 -->
+		<action name="struts_*" class="lin.struts2.struts01.StrutsTest"
+			method="{1}">
+			<result name="test1">/struts2/testStruts.jsp</result>
+			<result name="test2">/struts2/testStruts.jsp</result>
+		</action>
+		<action name="testAction_*" class="lin.struts2.struts01.ListStruts"
+			method="{1}">
+			<result name="list">/struts2/testStrutsList.jsp</result>
+			<result name="map">/struts2/testStrutsList.jsp</result>
+		</action>
+		<action name="userAction_*" class="com.web.action.UserAction"
+			method="{1}">
+			<result name="action1">/struts2/testStruts.jsp</result>
+		</action>
+
+		<!-- crm登录 -->
+		<action name="user_*" class="com.web.action.CrmUserAction"
+			method="{1}">
+			<result name="success" type="redirect">/index.htm</result>
+		</action>
+
+	</package>
+
+</struts>
